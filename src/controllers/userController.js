@@ -12,7 +12,7 @@ const loginUser= async function(req,res){
     let user = await userModel.findOne({emailId:userName,password:password})
     if (!user) return res.send ({ status:false,msg:"username or the password is not correct"})
 
-    let payload = {_userId: user._idtoString}
+    let payload = {userId: user._id.toString()}
     let token = jwt.sign(payload,"Naman")
     res.send({status:true,data:token})
 } 
@@ -21,13 +21,12 @@ const getUserData = async function (req, res) {
     let token =req.headers['x-auth-token']
     console.log(token) 
     let userId = req.params.userId;
-    
-    
     let userDetails = await userModel.findById(userId);
     if (!userDetails)
       return res.send({ status: false, msg: "No such user exists" });
     res.send({ status: true, data: userDetails });
   };
+
   const updateUser = async function (req, res) {
     let userData = req.body;
     let userId = req.params.userId;

@@ -11,7 +11,7 @@ router.post("/login", userController.loginUser)
 //The userId is sent by front end
 router.get("/users/:userId", auth.verification,userController.getUserData)
 
-router.put("/users/:userId", auth.verification,userController.updateUser)
-router.delete("/users/:userId",  auth.verification,userController.markUser) 
+router.put("/update/:userId", auth.verification,userController.updateUser)
+router.delete("/delete/:userId",  auth.verification,userController.markUser) 
 
 module.exports = router;
