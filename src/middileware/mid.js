@@ -1,13 +1,16 @@
 const jwt = require("jsonwebtoken");
 
 const verification = function(req, res, next){
+    try{
     let token = req.headers['x-auth-token']
+    
     if(!token)
     {
-        return res.send({ status: false, msg: "Token must be present" })
+        return res.status(401).send({ status: false, msg: "Token must be present" })
     }
     else
     {
+        
         
         let decodedToken = jwt.verify(token, "Naman");
         console.log(decodedToken)
@@ -18,10 +21,14 @@ const verification = function(req, res, next){
             next()
         }
         else {
-          return res.send({ status: false, msg: "Token is invalid" });
+          return res.status(401).send({ status: false, msg: "Token is invalid" });
         }
     }
-   
+}
+   catch(error){
+  return res.status(500).send(error.massage)
+
+   }
 }
 
 module.exports.verification = verification
